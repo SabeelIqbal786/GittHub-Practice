@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class for a person
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    Person(string n, int a) : name(n), age(a) {}
+
+    void displayPersonInfo() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+// Intermediate class for an employee (Multilevel inheritance)
+class Employee : public Person {
+protected:
+    int employeeID;
+    string role;
+
+public:
+    Employee(string n, int a, int id, string r) 
+        : Person(n, a), employeeID(id), role(r) {}
+
+    void displayEmployeeInfo() {
+        displayPersonInfo();
+        cout << "Employee ID: " << employeeID << ", Role: " << role << endl;
+    }
+};
+
+// Class for a department
+class Department {
+protected:
+    string departmentName;
+
+public:
+    Department(string deptName) : departmentName(deptName) {}
+
+    void displayDepartmentInfo() {
+        cout << "Department: " << departmentName << endl;
+    }
+};
+
+// Manager class inherits from Employee and Department (Multiple inheritance)
+class Manager : public Employee, public Department {
+private:
+    int teamSize;
+
+public:
+    Manager(string n, int a, int id, string r, string deptName, int tSize) 
+        : Employee(n, a, id, r), Department(deptName), teamSize(tSize) {}
+
+    void displayManagerInfo() {
+        displayEmployeeInfo();
+        displayDepartmentInfo();
+        cout << "Team Size: " << teamSize << endl;
+    }
+};
+
+// Main function
+int main() {
+    // Create a Manager object
+    Manager mgr("Alice", 35, 1001, "Project Manager", "IT Department", 10);
+
+    // Display the manager's full details
+    cout << "Manager Details:" << endl;
+    mgr.displayManagerInfo();
+
+    return 0;
+}
